@@ -16,6 +16,9 @@ public class PostBox implements Serializable {
     private String password;
     private String name;
 
+    public PostBox() {
+    }
+
     public long getId() {
         return id;
     }
