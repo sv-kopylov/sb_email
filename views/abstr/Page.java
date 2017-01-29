@@ -31,11 +31,6 @@ public abstract class Page {
         }
         sb.append("</html>");
 
-
-
-
-
-         sb.append("</html>");
         return sb.toString();
     }
 

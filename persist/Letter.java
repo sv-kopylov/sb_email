@@ -1,9 +1,6 @@
 package sb_email.persist;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -12,6 +9,8 @@ import java.io.Serializable;
 @Entity
 public class Letter implements Serializable{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String subject;
     private String body;
@@ -27,8 +26,7 @@ public class Letter implements Serializable{
         return id;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     public void setId(long id) {
         this.id = id;
     }

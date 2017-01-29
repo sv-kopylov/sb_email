@@ -19,7 +19,7 @@ public class Head implements Element {
     public String getElement() {
         return "<head>\r\n" +
                 "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\r\n" +
-                "<title>Your Website</title>\r\n" +
+                "<title>"+tytle+"</title>\r\n" +
                 "</head>\r\n";
     }
 }

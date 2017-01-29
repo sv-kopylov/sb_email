@@ -2,7 +2,7 @@ package sb_email.persist;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Сергей on 26.01.2017.
@@ -10,7 +10,10 @@ import java.sql.Date;
 @Entity
 public class LetterBoxBunch implements Serializable{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @ManyToOne
     private PostBox postBox;
 
@@ -34,8 +37,7 @@ public class LetterBoxBunch implements Serializable{
         return id;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     public void setId(long id) {
         this.id = id;
     }

@@ -23,10 +23,10 @@ public class Message implements Element {
     public String getElement() {
 
         if (style!=null){
-            return  "<p style = "+style+">"+message+"</p>";
+            return  "<p style = \""+style+"\">"+message+"</p>\r\n";
         }
 
-        return "<p>"+message+"</p>";
+        return "<p>"+message+"</p>\r\n";
     }
 
     public String getMessage() {

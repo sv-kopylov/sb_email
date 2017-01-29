@@ -31,6 +31,7 @@ public class Body implements Element {
         sb.append("<body>\r\n");
         if (message!=null){
             sb.append(message.getElement());
+            message=null;
         }
         if (bodyHeader!=null){
             sb.append(bodyHeader.getElement());
@@ -50,7 +51,7 @@ public class Body implements Element {
 
 
 
-        sb.append("</body>");
+        sb.append("</body>\r\n");
         return sb.toString();
 
     }
@@ -81,10 +82,6 @@ public class Body implements Element {
 
     public ArrayList<Element> getElements() {
         return elements;
-    }
-
-    public Message getMessage() {
-        return message;
     }
 
     public void setMessage(Message message) {
