@@ -1,8 +1,7 @@
 package sb_email.views.conc;
 
 import sb_email.views.abstr.Body;
-import sb_email.views.abstr.Element;
-import sb_email.views.abstr.Message;
+import sb_email.views.abstr.bodyelemants.Message;
 import sb_email.views.abstr.Page;
 
 /**

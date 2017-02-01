@@ -1,7 +1,11 @@
 package sb_email.views.abstr;
 
+import sb_email.views.abstr.bodyelemants.BodyAside;
+import sb_email.views.abstr.bodyelemants.BodyFooter;
+import sb_email.views.abstr.bodyelemants.BodyHeader;
+import sb_email.views.abstr.bodyelemants.Message;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Сергей on 28.01.2017.

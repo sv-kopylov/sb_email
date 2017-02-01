@@ -1,4 +1,6 @@
-package sb_email.views.abstr;
+package sb_email.views.abstr.bodyelemants;
+
+import sb_email.views.abstr.Element;
 
 /**
  * Created by Сергей on 28.01.2017.
