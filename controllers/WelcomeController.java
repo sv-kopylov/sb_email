@@ -10,6 +10,7 @@ import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
 import sb_email.views.conc.WelcomePage;
 
+import javax.jws.WebParam;
 import java.util.List;
 
 /**
@@ -23,19 +24,19 @@ public class WelcomeController {
 
     @Autowired
     PostBoxDao postBoxDao;
-    private String login;
-    private String password;
-    private String name;
+    private String userLogin;
+    private String userPassword;
+    private String userName;
     private PostBox usersBox;
     private WelcomePage wp = new WelcomePage();
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public String create(String usersLogin, String usersPassword, String usersName) {
-        if (usersLogin == null || usersPassword == null||usersName==null) {
+    public String create(@WebParam String login, @WebParam String password, @WebParam String name) {
+        if (login == null || password == null||name==null) {
             return wp.setWarning("some parameter(s) wasnt get").getPage();
         }
-        login = usersLogin;
+        userLogin = login;
 
 
 
@@ -43,8 +44,8 @@ public class WelcomeController {
             return wp.setWarning("user "+login+" already exists").getPage();
         }
 
-        password = usersPassword;
-        name = usersName;
+       userPassword = password;
+        userName = name;
 
         usersBox = new PostBox();
         usersBox.setLogin(login);
