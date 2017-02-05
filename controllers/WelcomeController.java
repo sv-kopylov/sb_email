@@ -5,9 +5,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
+import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.WelcomePage;
 
 import javax.jws.WebParam;
@@ -29,34 +31,31 @@ public class WelcomeController {
     private String userName;
     private PostBox usersBox;
     private WelcomePage wp = new WelcomePage();
+    private PostBoxPage pbp = new PostBoxPage();
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String create(@WebParam String login, @WebParam String password, @WebParam String name) {
-        if (login == null || password == null||name==null) {
-            return wp.setWarning("some parameter(s) wasnt get").getPage();
-        }
-        userLogin = login;
+    public String login (@RequestParam("login") String login,
+                         @RequestParam("password") String password) {
 
-
-
-        if (postBoxDao.findByLogin(login) != null) {
-            return wp.setWarning("user "+login+" already exists").getPage();
+        System.out.println(login);
+        System.out.println(password);
+        if (login == null || password == null) {
+            return wp.setInfo("Please enter your login & password for enter").getPage();
         }
 
-       userPassword = password;
-        userName = name;
 
-        usersBox = new PostBox();
-        usersBox.setLogin(login);
-        usersBox.setPassword(password);
-        usersBox.setName(name);
-
-        postBoxDao.save(usersBox);
-
-
-        return wp.setInfo("User successfully added").getPage();
+        if ((usersBox=postBoxDao.findByLogin(login)) != null) {
+            if (password.equals(usersBox.getPassword())){
+                return pbp.getPage();
+            } else  return wp.setWarning("password is incorrect").getPage();
+        } else return wp.setWarning("user "+login+" does not exists").getPage();
     }
 
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+    @ResponseBody
+    public String welcome (){
+        return wp.getPage();
+    }
 
 }

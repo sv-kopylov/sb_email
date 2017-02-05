@@ -50,12 +50,11 @@ public class Body implements Element {
        if (elements.size()>0){
             for(Element el: elements){
                 sb.append(el.getElement());
+                sb.append("<br>");
             }
        }
 
-
-
-        sb.append("</body>\r\n");
+        sb.append("\r\n</body>\r\n");
         return sb.toString();
 
     }

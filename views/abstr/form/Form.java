@@ -16,9 +16,14 @@ public class Form implements Element {
         this.method = method;
     }
 
+    public int addInput(Input element){
+        elements.add(element);
+        return elements.indexOf(element);
+    }
+
     @Override
     public boolean isSingle() {
-        return false;
+        return true;
     }
 
     @Override
@@ -26,7 +31,7 @@ public class Form implements Element {
         if (action == null || method == null || elements == null) return "";
         if (elements.size() == 0) return "";
         StringBuilder sb = new StringBuilder();
-        sb.append("<form action=\"" + action + "\" method=\"" + method + ">\r\n");
+        sb.append("<form action=\"" + action + "\" method=\"" + method + "\">\r\n");
         for (Element e : elements) {
             sb.append(e.getElement());
         }
@@ -34,4 +39,19 @@ public class Form implements Element {
 
         return sb.toString();
     }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+
+    public ArrayList<Input> getElements() {
+        return elements;
+    }
+
+
 }
