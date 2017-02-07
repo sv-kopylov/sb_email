@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sb_email.controllers.manager.Bag;
+import sb_email.controllers.manager.PostBoxManager;
 import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
 import sb_email.views.conc.CreatingPage;
@@ -13,6 +15,7 @@ import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.WelcomePage;
 
 import javax.jws.WebParam;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Сергей on 03.02.2017.
@@ -22,17 +25,19 @@ import javax.jws.WebParam;
 public class CreateController {
     @Autowired
     PostBoxDao postBoxDao;
+
+    @Autowired
+    private Bag bag;
     private String userLogin;
     private String userPassword;
     private String userName;
     private PostBox usersBox;
-
     private CreatingPage creatingPage = new CreatingPage();
 
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public String create(@WebParam String login, @WebParam String password, @WebParam String name) {
+    public String create(HttpServletRequest req, @WebParam String login, @WebParam String password, @WebParam String name) {
         if (login == null || password == null||name==null) {
             return creatingPage.setInfo("Enter your details for register postbox").getPage();
         }
@@ -48,8 +53,16 @@ public class CreateController {
 
         postBoxDao.save(usersBox);
 
+        PostBoxManager pbm = new PostBoxManager(req.getSession().getId(), usersBox);
+        bag.addManager(pbm);
+        return pbm.getPostBoxPage().getPage();
 
-        return new PostBoxPage().getPage();
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    @ResponseBody
+    public String getEmptyForm (){
+        return creatingPage.setInfo("Enter your details for register postbox").getPage();
     }
 
 
