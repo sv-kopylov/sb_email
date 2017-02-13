@@ -1,18 +1,24 @@
 package sb_email.controllers;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import sb_email.controllers.manager.Bag;
+import sb_email.controllers.manager.IdGen;
+import sb_email.controllers.manager.PostBoxManager;
 import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
 import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.WelcomePage;
 
 import javax.jws.WebParam;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -20,12 +26,17 @@ import java.util.List;
  */
 @Controller
 @Scope(value = "request")
+@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 public class WelcomeController {
 
+    private static Logger logger = LogManager.getLogger(WelcomeController.class);
 
 
     @Autowired
     PostBoxDao postBoxDao;
+    @Autowired
+    private Bag bag;
+
     private String userLogin;
     private String userPassword;
     private String userName;
@@ -35,11 +46,12 @@ public class WelcomeController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login (@RequestParam("login") String login,
-                         @RequestParam("password") String password) {
+    public String login (@RequestParam(value = "login", required = false) String login,
+                         @RequestParam(value = "password", required = false) String password) {
 
-        System.out.println(login);
-        System.out.println(password);
+//        System.out.println("login "+login);
+//        System.out.println("password "+password);
+
         if (login == null || password == null) {
             return wp.setInfo("Please enter your login & password for enter").getPage();
         }
@@ -47,12 +59,16 @@ public class WelcomeController {
 
         if ((usersBox=postBoxDao.findByLogin(login)) != null) {
             if (password.equals(usersBox.getPassword())){
-                return pbp.getPage();
+                PostBoxManager pbm = new PostBoxManager(IdGen.getId(login), usersBox);
+                bag.addManager(pbm);
+       logger.debug("heree postBox manager should be added into the Bag");
+//       System.out.println("heree postBox manager should be added into the Bag "+pbm.getSessionId());
+                return pbm.getPostBoxPage().setInfo("Perhaps tou are logged in").getPage();
             } else  return wp.setWarning("password is incorrect").getPage();
         } else return wp.setWarning("user "+login+" does not exists").getPage();
     }
 
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public String welcome (){
         return wp.getPage();

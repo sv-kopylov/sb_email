@@ -24,7 +24,7 @@ public class LetterBoxBunch implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Date date;
 
-    private boolean deleted;
+    private boolean deleted = false;
 
     @Enumerated (EnumType.STRING)
     private Relation relation;

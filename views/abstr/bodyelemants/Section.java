@@ -1,5 +1,6 @@
 package sb_email.views.abstr.bodyelemants;
 
+import sb_email.views.abstr.Attributes;
 import sb_email.views.abstr.Element;
 
 import java.util.ArrayList;
@@ -9,8 +10,9 @@ import java.util.ArrayList;
  */
 public class Section implements Element {
 
-    private String style;
+    private Attributes attributes = new Attributes();
     private ArrayList<Element> elements = new ArrayList<>();
+
 
 
 
@@ -23,10 +25,8 @@ public class Section implements Element {
     public String getElement() {
         StringBuilder sb = new StringBuilder();
         if (elements.size()>0){
-            sb.append("<section");
-            if(style!=null) {
-                sb.append(" style = \"" + style + "\"");
-            }
+            sb.append("<section ");
+            sb.append(attributes.toString());
             sb.append(">\r\n");
             for (Element e: elements){
                 sb.append(e.getElement());
@@ -42,12 +42,9 @@ public class Section implements Element {
         return elements.indexOf(element);
     }
 
-    public String getStyle() {
-        return style;
-    }
-
     public void setStyle(String style) {
-        this.style = style;
+        attributes.setAttribute("style", style);
+
     }
 
     public ArrayList<Element> getElements() {

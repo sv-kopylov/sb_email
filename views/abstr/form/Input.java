@@ -2,8 +2,6 @@ package sb_email.views.abstr.form;
 
 import sb_email.views.abstr.Element;
 
-import javax.naming.OperationNotSupportedException;
-
 /**
  * Created by Сергей on 30.01.2017.
  */
@@ -46,6 +44,7 @@ public abstract class Input implements Element {
     }
 
     public String getPlaseholder() {
+        if (plaseholder==null) return "";
         return plaseholder;
     }
 
@@ -54,10 +53,14 @@ public abstract class Input implements Element {
     }
 
     public String getValue() {
-        return value;
+        if (value==null) {
+            return"";
+        } else {
+            return "value = \""+value+"\"";
+        }
     }
 
-    public void setValue(String value) throws OperationNotSupportedException {
+    public void setValue(String value) {
         this.value = value;
     }
 }

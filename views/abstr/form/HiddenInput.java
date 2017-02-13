@@ -20,9 +20,9 @@ public class HiddenInput extends Input {
         StringBuilder sb = new StringBuilder();
         sb.append("<input type=\"hidden\" name=\"");
         sb.append(super.getName());
-        sb.append("\" value=\"");
+        sb.append("\" ");
         sb.append(super.getValue());
-        sb.append("\">\r\n");
+        sb.append("/>\r\n");
         return sb.toString();
     }
 }

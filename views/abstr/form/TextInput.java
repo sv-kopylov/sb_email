@@ -1,7 +1,5 @@
 package sb_email.views.abstr.form;
 
-import javax.naming.OperationNotSupportedException;
-
 /**
  * Created by Сергей on 01.02.2017.
  */
@@ -22,21 +20,21 @@ public class TextInput extends Input {
     public String getElement() {
         StringBuilder sb = new StringBuilder();
         if (type.equals("textarea")){
-            sb.append("<label for = \""+super.getId()+"\">");
+            sb.append("<p>");
             sb.append(super.getLabel());
-            sb.append("</label>\r\n");
-            sb.append("<textarea id = \""+super.getId()+"\">");
-            sb.append("</textarea>\r\n");
+            sb.append(" <textarea>");
+            sb.append(super.getValue());
+            sb.append("</textarea>");
+            sb.append("</p>\r\n");
         } else {
-            sb.append("<label for = \""+super.getId()+"\">");
+            sb.append("<p>");
             sb.append(super.getLabel());
-            sb.append("</label>\r\n");
-            sb.append("<input id = \""+super.getId()+"\" ");
+            sb.append(" <input name = \""+super.getName()+"\" ");
             sb.append("type = \""+type+"\" ");
             if (super.getPlaseholder()!=null){
                 sb.append("placeholder = \""+super.getPlaseholder()+"\" ");
             }
-            sb.append("</input>\r\n");
+            sb.append("></p>\r\n");
 
         }
 
@@ -49,10 +47,7 @@ public class TextInput extends Input {
         return type.toString();
     }
 
-    @Override
-    public void setValue(String value) throws OperationNotSupportedException {
-        throw(new OperationNotSupportedException());
-    }
+
 
 
 }

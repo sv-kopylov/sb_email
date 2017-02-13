@@ -53,9 +53,8 @@ public class CreateController {
 
         postBoxDao.save(usersBox);
 
-        PostBoxManager pbm = new PostBoxManager(req.getSession().getId(), usersBox);
-        bag.addManager(pbm);
-        return pbm.getPostBoxPage().getPage();
+        return new WelcomePage().setInfo("Post box successfully created," +
+                " please login for access to your account").getPage();
 
     }
 

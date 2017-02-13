@@ -14,7 +14,7 @@ public class WelcomePage extends Page{
     private Message warningMess = new Message("");
     private Message infoMess = new Message("");
     private Body body = new Body();
-    private String action = "/login";
+    private String action = "/welcome/login";
 
     public WelcomePage() {
         super("welcome");
