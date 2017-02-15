@@ -28,7 +28,11 @@ public abstract class Input implements Element {
     }
 
     public String getName() {
-        return name;
+        if (name==null) {
+            return"";
+        } else {
+            return "name = \""+name+"\"";
+        }
     }
 
     public void setName(String name) {
@@ -44,8 +48,12 @@ public abstract class Input implements Element {
     }
 
     public String getPlaseholder() {
-        if (plaseholder==null) return "";
-        return plaseholder;
+        if (plaseholder==null) {
+            return"";
+        } else {
+            return "plaseholder = \""+plaseholder+"\"";
+        }
+
     }
 
     public void setPlaseholder(String plaseholder) {
@@ -62,5 +70,13 @@ public abstract class Input implements Element {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getValuePure() {
+        if (value==null) {
+            return"";
+        } else {
+            return value;
+        }
     }
 }

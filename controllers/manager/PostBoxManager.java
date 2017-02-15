@@ -56,5 +56,17 @@ public class PostBoxManager {
         setTimeStamp();
         return postBox;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PostBoxManager that = (PostBoxManager) o;
+
+        return postBox.getLogin().equals(that.postBox.getLogin());
+    }
+
+
 }
 

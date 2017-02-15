@@ -14,6 +14,13 @@ public class Bag {
     private TreeMap<String, PostBoxManager> treeMap = new TreeMap<>();
 
     public void addManager (PostBoxManager manager){
+        PostBoxManager jocker;
+        for (PostBoxManager pbm: treeMap.values()){
+            if (pbm.equals(manager)){
+                treeMap.remove(pbm.getSessionId());
+                break;
+            }
+        }
         treeMap.put(manager.getSessionId(), manager);
     }
 

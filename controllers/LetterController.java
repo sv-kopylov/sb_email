@@ -82,11 +82,13 @@ public class LetterController {
         }
 
         if (subject != null) {
+
             letterPage.setSubject(subject);
             letter.setSubject(subject);
+
         }
         if (letterBody != null) {
-    System.out.println(letterBody);
+
             letterPage.setLetterBody(letterBody);
             letter.setBody(letterBody);
         } else {
@@ -96,6 +98,7 @@ public class LetterController {
             return letterPage.setWarning("Please enter receiver").getPage();
         }
 
+//   собственно отправка
         String result = insertNecessary(letter, receiver, sessionId);
 
         if (result.equals("nullpointer")){
@@ -107,7 +110,7 @@ public class LetterController {
         }
 
 
-        return letterPage.setInfo(result).getPage();
+        return bag.getManager(sessionId).getPostBoxPage().setInfo(result).getPage();
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -136,18 +139,24 @@ public class LetterController {
         TreeSet<String> logins = parceReceiver(receivers);
         ArrayList<PostBox> boxes = new ArrayList<>();
         PostBox findBox;
+        StringBuilder stb= new StringBuilder();
         for (String s : logins) {
             findBox = postBoxDao.findByLogin(s);
             if (findBox != null) {
                 boxes.add(findBox);
-            } else {
+                stb.append(findBox.getLogin());
+                stb.append(", ");
+                } else {
                 sb.append("Account " + s + " not found<br>");
             }
+        } if (stb.length()>0){
+            let.setReceiver(stb.substring(0, stb.length()-2));
         }
         if (boxes.size() == 0) {
             return sb.toString();
         }
 //      save letter
+        let.setSender(ownerBox.getLogin());
         let = letterDao.save(let);
 
 //      save sent letter

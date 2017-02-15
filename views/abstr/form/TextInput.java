@@ -22,19 +22,22 @@ public class TextInput extends Input {
         if (type.equals("textarea")){
             sb.append("<p>");
             sb.append(super.getLabel());
-            sb.append(" <textarea>");
-            sb.append(super.getValue());
+            sb.append(" <textarea ");
+            sb.append(super.getName());
+            sb.append(">");
+            sb.append(super.getValuePure());
             sb.append("</textarea>");
             sb.append("</p>\r\n");
         } else {
             sb.append("<p>");
             sb.append(super.getLabel());
-            sb.append(" <input name = \""+super.getName()+"\" ");
-            sb.append("type = \""+type+"\" ");
-            if (super.getPlaseholder()!=null){
-                sb.append("placeholder = \""+super.getPlaseholder()+"\" ");
-            }
-            sb.append("></p>\r\n");
+            sb.append(" <input ");
+            sb.append(super.getName());
+            sb.append(super.getValue());
+            sb.append(" type = \""+type+"\" ");
+            sb.append(super.getPlaseholder());
+
+            sb.append("/></p>\r\n");
 
         }
 
