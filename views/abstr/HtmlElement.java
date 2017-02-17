@@ -5,8 +5,14 @@ package sb_email.views.abstr;
  */
 public abstract class HtmlElement implements Element {
     private String mainTag;
-    public abstract boolean isCloses();
+    private Attributes attributes = new Attributes();
 
+    protected HtmlElement(String mainTag) {
+        this.mainTag = mainTag;
+    }
+
+    protected abstract boolean hasCloseTag();
+    protected abstract String content();
 
     @Override
     public boolean isSingle() {
@@ -15,6 +21,28 @@ public abstract class HtmlElement implements Element {
 
     @Override
     public String getElement() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("<");
+        sb.append(mainTag);
+        if (!attributes.isEmpty()) {
+            sb.append(' ');
+            sb.append(attributes.toString());
+        }
+        if (hasCloseTag()) {
+            sb.append(">");
+            sb.append(content());
+            sb.append("<");
+            sb.append(mainTag);
+        }
+        sb.append("/>");
+        return sb.toString();
+    }
+
+    public String toString(){
+        return getElement();
+    }
+
+    public void setAttribute(String name, String value){
+        attributes.setAttribute(name, value);
     }
 }

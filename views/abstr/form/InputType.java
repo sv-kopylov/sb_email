@@ -5,7 +5,14 @@ package sb_email.views.abstr.form;
  */
 public enum InputType {
 
-    hidden;
+    hidden,
+    text,
+    textarea,
+    email,
+    password,
+    submit,
+    button,
+    reset;
 
 
 }

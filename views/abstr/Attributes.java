@@ -6,23 +6,43 @@ import java.util.HashMap;
  * Created by Сергей on 07.02.2017.
  */
 public class Attributes {
-    private HashMap<String, String> attribs = new HashMap<>();
+    private HashMap<String, String> map = new HashMap<>();
 
-    public void setAttribute (String name, String value){
-        attribs.put(name, value);
+    public void setAttribute(String name, String value){
+        map.put(name, value);
+    }
+
+    public String getAttribute(String name){
+        if (map.get(name)==null){
+            return "";
+        }
+        else{
+            return name+" = \""+map.get(name)+"\"";
+        }
+
+    }
+
+    public String getAttributePure(String name){
+        if (map.get(name)==null){
+            return "";
+        }
+        else{
+            return map.get(name);
+        }
+
     }
 
     public String toString(){
-        if (attribs.size()==0) return "";
+        if (map.isEmpty()) return"";
         StringBuilder sb = new StringBuilder();
-        for(String name: attribs.keySet()){
-            sb.append(name);
-            sb.append(" = \"");
-            sb.append(attribs.get(name));
-            sb.append("\" ");
-
+        for (String s:map.keySet()){
+            sb.append(getAttribute(s));
+            sb.append(' ');
         }
-        return sb.toString();
+        return sb.substring(0, sb.length()-1);
     }
 
+    public boolean isEmpty (){
+        return map.isEmpty();
+    }
 }
