@@ -4,8 +4,9 @@ import sb_email.views.abstr.Body;
 import sb_email.views.abstr.Wraper;
 import sb_email.views.abstr.bodyelemants.Message;
 import sb_email.views.abstr.Page;
-import sb_email.views.abstr.bodyelemants.TextElement;
+import sb_email.views.abstr.bodyelemants.PlainTextElement;
 import sb_email.views.abstr.form.*;
+import sb_email.views.abstr.layouts.Html2ColFormLayout;
 
 /**
  * Created by Сергей on 28.01.2017.
@@ -21,15 +22,22 @@ public class WelcomePage extends Page{
         warningMess.setStyle("color: red; font-size: 2em");
         infoMess.setStyle("color: black; font-size: 2em");
 
-        Form loginForm = new Form("POST");
-        loginForm.setAction(action);
-        loginForm.addInput(new TextInput("login", TextInputType.text));
-        loginForm.addInput(new TextInput("password", TextInputType.text));
-        loginForm.addInput(new ExecutiveInput("login", ExecutiveInputType.submit));
+        HtmlForm loginForm = new HtmlForm("POST", action);
+        loginForm.setLayout(new Html2ColFormLayout());
+        loginForm.addInput(new HtmlInput("login", InputType.text));
+        loginForm.addInput(new HtmlInput("password", InputType.text));
+        loginForm.setSubmitComandName("LOG IN");
+
+
+//        Form loginForm = new Form("POST");
+//        loginForm.setAction(action);
+//        loginForm.addInput(new TextInput("login", TextInputType.text));
+//        loginForm.addInput(new TextInput("password", TextInputType.text));
+//        loginForm.addInput(new ExecutiveInput("login", ExecutiveInputType.submit));
 
 
         body.addElement(loginForm);
-        body.addElement(new TextElement(Wraper.a("Create new post box","/create")));
+        body.addElement(new PlainTextElement(Wraper.a("Create new post box","/create")));
 
         super.setBody(body);
     }

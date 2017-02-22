@@ -23,16 +23,16 @@ public class PostBoxController {
 
     @RequestMapping(value = "/received", method = RequestMethod.GET)
     @ResponseBody
-    public String received (HttpServletRequest req){
-        PostBoxManager pbManager = bag.getManager(req.getSession().getId());
+    public String received (String sessionId){
+        PostBoxManager pbManager = bag.getManager(sessionId);
         return pbManager.getPostBoxPage().getPage();
 
     }
 
     @RequestMapping(value = "/sent", method = RequestMethod.GET)
     @ResponseBody
-    public String sent (HttpServletRequest req){
-        PostBoxManager pbManager = bag.getManager(req.getSession().getId());
+    public String sent (String sessionId){
+        PostBoxManager pbManager = bag.getManager(sessionId);
         return pbManager.getPostBoxPage().getPage();
 
     }

@@ -13,10 +13,11 @@ public class Html2ColFormLayout implements HtmlFormLayout {
         if (list==null||list.isEmpty()) return "";
         StringBuilder sb = new StringBuilder();
         for (HtmlInput hi: list){
+            sb.append("<p>");
             sb.append(hi.getLabel());
             sb.append(' ');
             sb.append(hi.toString());
-            sb.append("<br>");
+            sb.append("</p>");
         }
         return sb.toString();
     }

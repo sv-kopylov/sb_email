@@ -29,12 +29,12 @@ public abstract class HtmlElement implements Element {
             sb.append(attributes.toString());
         }
         if (hasCloseTag()) {
-            sb.append(">");
+            sb.append(">\r\n");
             sb.append(content());
             sb.append("<");
             sb.append(mainTag);
         }
-        sb.append("/>");
+        sb.append("/>\r\n");
         return sb.toString();
     }
 
@@ -45,4 +45,13 @@ public abstract class HtmlElement implements Element {
     public void setAttribute(String name, String value){
         attributes.setAttribute(name, value);
     }
+
+    public boolean removaAttribute(String name){
+        return attributes.removeAttribute(name);
+    }
+
+    public void clearAttributes(){
+        attributes.clear();
+    }
+
 }

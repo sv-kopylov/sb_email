@@ -49,13 +49,11 @@ public class WelcomeController {
     public String login (@RequestParam(value = "login", required = false) String login,
                          @RequestParam(value = "password", required = false) String password) {
 
-//        System.out.println("login "+login);
-//        System.out.println("password "+password);
+        System.out.println("request received");
 
         if (login == null || password == null) {
             return wp.setInfo("Please enter your login & password for enter").getPage();
         }
-
 
         if ((usersBox=postBoxDao.findByLogin(login)) != null) {
             if (password.equals(usersBox.getPassword())){

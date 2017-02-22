@@ -45,4 +45,15 @@ public class Attributes {
     public boolean isEmpty (){
         return map.isEmpty();
     }
+
+    public boolean removeAttribute(String name){
+        if (!map.containsKey(name)) return false;
+        map.remove(name);
+        return true;
+    }
+
+    public void clear(){
+        clear();
+    }
+
 }

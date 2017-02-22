@@ -6,10 +6,10 @@ import sb_email.views.abstr.Wraper;
 /**
  * Created by Сергей on 02.02.2017.
  */
-public class TextElement implements Element {
+public class PlainTextElement implements Element {
     private String text;
 
-    public TextElement(String text) {
+    public PlainTextElement(String text) {
         this.text = text;
     }
 

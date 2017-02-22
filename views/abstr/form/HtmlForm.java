@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class HtmlForm extends HtmlElement {
     private ArrayList<HtmlInput> inputs = new ArrayList<>();
-    private HtmlInput submitButton = new HtmlInput("",InputType.button);
+    private HtmlSubmit submitButton = new HtmlSubmit("submit");
     private HtmlFormLayout layout = new HtmlPlainFormLayout();
 
     public HtmlForm(String method, String action) {

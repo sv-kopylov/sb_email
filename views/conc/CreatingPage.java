@@ -2,9 +2,8 @@ package sb_email.views.conc;
 
 import sb_email.views.abstr.Body;
 import sb_email.views.abstr.Page;
-import sb_email.views.abstr.Wraper;
 import sb_email.views.abstr.bodyelemants.Message;
-import sb_email.views.abstr.bodyelemants.TextElement;
+import sb_email.views.abstr.bodyelemants.PlainTextElement;
 import sb_email.views.abstr.form.*;
 
 /**
@@ -29,7 +28,7 @@ public class CreatingPage extends Page {
 
         form.addInput(new ExecutiveInput("create", ExecutiveInputType.submit));
 
-        body.addElement(new TextElement("Enter your details for create"));
+        body.addElement(new PlainTextElement("Enter your details for create"));
         body.addElement(form);
 
         super.setBody(body);
