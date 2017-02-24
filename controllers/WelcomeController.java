@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import sb_email.controllers.manager.Bag;
 import sb_email.controllers.manager.IdGen;
 import sb_email.controllers.manager.PostBoxManager;
+import sb_email.dao.LettersBoxBunchDao;
 import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
 import sb_email.views.conc.PostBoxPage;
@@ -36,6 +37,8 @@ public class WelcomeController {
     PostBoxDao postBoxDao;
     @Autowired
     private Bag bag;
+    @Autowired
+    private LettersBoxBunchDao lettersBoxBunchDao;
 
     private String userLogin;
     private String userPassword;
@@ -56,13 +59,15 @@ public class WelcomeController {
         }
 
         if ((usersBox=postBoxDao.findByLogin(login)) != null) {
+
             if (password.equals(usersBox.getPassword())){
                 PostBoxManager pbm = new PostBoxManager(IdGen.getId(login), usersBox);
                 bag.addManager(pbm);
+                pbm.setReceivedLetters(lettersBoxBunchDao);
        logger.debug("heree postBox manager should be added into the Bag");
-//       System.out.println("heree postBox manager should be added into the Bag "+pbm.getSessionId());
                 return pbm.getPostBoxPage().setInfo("Perhaps tou are logged in").getPage();
-            } else  return wp.setWarning("password is incorrect").getPage();
+
+                } else  return wp.setWarning("password is incorrect").getPage();
         } else return wp.setWarning("user "+login+" does not exists").getPage();
     }
 

@@ -35,6 +35,7 @@ public class PostBoxPage extends Page {
         sendLetterForm.addInput(hiddenInput);
         sendLetterForm.addInput(new ExecutiveInput("create", ExecutiveInputType.submit));
         body.addElement(sendLetterForm);
+        body.addElement(lettersList);
         super.setBody(body);
     }
 
@@ -54,7 +55,7 @@ public class PostBoxPage extends Page {
         for(Letter let:letters){
             item.setletter(let);
             lettersList.addElement(item.toStrring());
-        }
+            }
         return this;
     }
     public PostBoxPage setWarning (String warning){

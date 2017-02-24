@@ -17,8 +17,7 @@ import java.util.List;
  */
 public class PostBoxManager {
 
-    @Autowired
-    private LettersBoxBunchDao lettersBoxBunchDao;
+
 
     private PostBoxPage postBoxPage = new PostBoxPage();
 
@@ -60,7 +59,7 @@ public class PostBoxManager {
         return postBox;
     }
 
-    private ArrayList<Letter> getSentLetters(){
+    private boolean setSentLetters(LettersBoxBunchDao lettersBoxBunchDao){
         bunches = lettersBoxBunchDao.findByPostBox(postBox);
         if (bunches!=null&&bunches.size()>0){
             ArrayList<Letter> sentLetters = new ArrayList<>();
@@ -70,26 +69,29 @@ public class PostBoxManager {
                 }
             }
             if(sentLetters.size()>0){
-                return sentLetters;
+                postBoxPage.setSentLetters(sentLetters);
+                return true;
             }
         }
-        return null;
+        return false;
     };
 
-private ArrayList<Letter> getReceivedLetters() {
+    public boolean setReceivedLetters(LettersBoxBunchDao lettersBoxBunchDao) {
         bunches = lettersBoxBunchDao.findByPostBox(postBox);
         if (bunches!=null&&bunches.size()>0){
-            ArrayList<Letter> sentLetters = new ArrayList<>();
+            ArrayList<Letter> receivedLetters = new ArrayList<>();
             for (LetterBoxBunch b: bunches){
                 if (b.getRelation().equals(Relation.RECEIVED)){
-                    sentLetters.add(b.getLetter());
+                    receivedLetters.add(b.getLetter());
                 }
             }
-            if(sentLetters.size()>0){
-                return sentLetters;
+            
+            if(receivedLetters.size()>0){
+                postBoxPage.setReceivedLetters(receivedLetters);
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override
