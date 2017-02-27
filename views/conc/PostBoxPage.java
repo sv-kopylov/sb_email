@@ -3,6 +3,7 @@ package sb_email.views.conc;
 import sb_email.persist.Letter;
 import sb_email.views.abstr.Body;
 import sb_email.views.abstr.Page;
+import sb_email.views.abstr.bodyelemants.HtmlA;
 import sb_email.views.abstr.bodyelemants.HtmlUnorderedList;
 import sb_email.views.abstr.bodyelemants.Message;
 import sb_email.views.abstr.form.ExecutiveInput;
@@ -17,7 +18,13 @@ import java.util.ArrayList;
  */
 public class PostBoxPage extends Page {
     private final String sendLetterAction = "/letter/";
-    private final String viewLetterAction = "/letter/view";
+    private final String viewLetterAction = "/postbox/view";
+    private final String viewSentLettersAction = "/postbox/sent";
+    private final String viewReceivedLettersAction = "/postbox/received";
+
+    HtmlA sentLettersLink = new HtmlA("Sent letters");
+    HtmlA receivedLettersLink = new HtmlA("Received letters");
+
     HiddenInput hiddenInput = new HiddenInput("sessionId");
     Body body = new Body();
     Message mess = new Message("You successfuly logged in, or send message");
@@ -35,10 +42,11 @@ public class PostBoxPage extends Page {
         sendLetterForm.addInput(hiddenInput);
         sendLetterForm.addInput(new ExecutiveInput("create", ExecutiveInputType.submit));
         body.addElement(sendLetterForm);
+        body.addElement(receivedLettersLink);
+        body.addElement(sentLettersLink);
         body.addElement(lettersList);
         super.setBody(body);
     }
-
     public PostBoxPage setSentLetters(ArrayList<Letter> letters){
         lettersList.clear();
         SentLetterItem item = new SentLetterItem(viewLetterAction);
@@ -49,12 +57,12 @@ public class PostBoxPage extends Page {
         return this;
     }
 
-    public PostBoxPage setReceivedLetters(ArrayList<Letter> letters){
+    public PostBoxPage setReceivedLetters(ArrayList<Letter> letters, String sessId){
         lettersList.clear();
-        ReceivedLetterItem item = new ReceivedLetterItem(viewLetterAction);
+        ReceivedLetterItem item = new ReceivedLetterItem(viewLetterAction, sessId);
         for(Letter let:letters){
             item.setletter(let);
-            lettersList.addElement(item.toStrring());
+            lettersList.addElement(item.toString());
             }
         return this;
     }
@@ -71,7 +79,8 @@ public class PostBoxPage extends Page {
     public PostBoxPage setSessionId(String sessionId)  {
         this.sessionId = sessionId;
         hiddenInput.setValue(sessionId);
-
+        receivedLettersLink.setAction(viewReceivedLettersAction+ "?"+"sessionId="+sessionId);
+        sentLettersLink.setAction(viewSentLettersAction+ "?"+"sessionId="+sessionId);
         return this;
     }
 }

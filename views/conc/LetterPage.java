@@ -1,5 +1,6 @@
 package sb_email.views.conc;
 
+import sb_email.persist.Letter;
 import sb_email.views.abstr.Body;
 import sb_email.views.abstr.Page;
 import sb_email.views.abstr.bodyelemants.Message;
@@ -56,6 +57,14 @@ public class LetterPage extends Page {
         return this;
     }
 
+    public LetterPage setletter (Letter letter){
+        setReceiver(letter.getReceiver());
+        setSubject(letter.getSubject());
+        setLetterBody(letter.getBody());
+
+        return this;
+    }
+
     public void setSessionId(String sessionId) {
 
         inputSessionId.setValue(sessionId);
@@ -72,5 +81,6 @@ public class LetterPage extends Page {
         this.receiver.setValue(receiver);
 
     }
+
 
 }

@@ -85,9 +85,9 @@ public class PostBoxManager {
                     receivedLetters.add(b.getLetter());
                 }
             }
-            
+
             if(receivedLetters.size()>0){
-                postBoxPage.setReceivedLetters(receivedLetters);
+                postBoxPage.setReceivedLetters(receivedLetters, sessionId);
                 return true;
             }
         }

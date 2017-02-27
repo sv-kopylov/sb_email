@@ -1,7 +1,9 @@
 package sb_email.views.conc;
 
 import sb_email.persist.Letter;
+import sb_email.views.abstr.Wraper;
 import sb_email.views.abstr.form.HtmlForm;
+import sb_email.views.abstr.form.HtmlHiddenInput;
 import sb_email.views.abstr.form.HtmlInput;
 import sb_email.views.abstr.form.InputType;
 import sb_email.views.abstr.layouts.HtmlPlainFormLayout;
@@ -10,26 +12,32 @@ import sb_email.views.abstr.layouts.HtmlPlainFormLayout;
  * Created by Сергей on 21.02.2017.
  */
 public class ReceivedLetterItem {
-    HtmlForm form;
-    HtmlInput hidden;
+    String action;
     String content;
-
-    public ReceivedLetterItem(String action) {
-        form = new HtmlForm("POST",action);
-        form.setLayout(new HtmlPlainFormLayout());
-        form.setSubmitComandName("view");
-        hidden = new HtmlInput("letterId", InputType.hidden);
-        form.addInput(hidden);
+    String letterId;
 
 
+    public ReceivedLetterItem(String action, String sessionId) {
+        this.action = action + "?"+"sessionId="+sessionId+"&letterId=";
     }
 
     public void setletter(Letter letter){
-        hidden.setAttribute("value", Long.toString(letter.getId()));
-        content = "From: "+letter.getSender()+"\r\n"+"subject: "+letter.getSubject();
+        letterId = Long.toString(letter.getId());
+        String preview = "";
+        if (letter.getBody()!=null) {
+            if (letter.getBody().length() < 20) {
+                preview = letter.getBody();
+            } else {
+                preview = letter.getBody().substring(0, 19) + "...";
+            }
+        }
+        content = "From: "+letter.getSender()+", "+"subject: "+letter.getSubject()+", "+preview;
     }
 
-    public String toStrring(){
-        return content + form.toString();
+    public String toString(){
+        return Wraper.a(content, action+letterId);
     }
+
+
+
 }
