@@ -24,10 +24,7 @@ import sb_email.views.conc.WelcomePage;
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by Сергей on 06.02.2017.
@@ -116,8 +113,55 @@ public class LetterController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseBody
     public String prepareLetterPage (@RequestParam(value = "sessionId", required = false) String sessionId){
+        if(bag.getManager(sessionId)==null){
+            return new WelcomePage().getPage();
+        }
         letterPage.setSessionId(sessionId);
         return letterPage.setInfo("DEBUG").getPage();
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @ResponseBody
+    public String delete (@WebParam String sessionId,
+                          @WebParam String letterId
+    )  {
+        PostBoxManager pbmngr = bag.getManager(sessionId);
+        if (pbmngr==null) return new WelcomePage().getPage();
+
+        PostBox pb = pbmngr.getPostBox();
+        Letter letter =letterDao.findOne(Long.parseLong(letterId));
+        Relation relation=Relation.RECEIVED;
+
+        List<LetterBoxBunch> bunches = lettersBoxBunchDao.findByPostBox(pb);
+        for (int i=0; i<bunches.size(); i++){
+           if(bunches.get(i).getLetter().equals(letter)){
+               bunches.get(i).setDeleted(true);
+               lettersBoxBunchDao.save(bunches.get(i));
+               relation = bunches.get(i).getRelation();
+               break;
+              }
+
+        }
+
+        bunches = lettersBoxBunchDao.findByLetter(letter);
+        int cnt=0;
+        for(int i=0; i<bunches.size(); i++){
+            if (!bunches.get(i).isDeleted()){
+                cnt++;
+            }
+        }
+        if(cnt==0){
+            lettersBoxBunchDao.delete(bunches);
+            letterDao.delete(letter);
+        }
+
+        if(relation.equals(Relation.SENT)){
+           pbmngr.setSentLetters(lettersBoxBunchDao);
+        return pbmngr.getPostBoxPage().getPage();
+        } else {
+            pbmngr.setReceivedLetters(lettersBoxBunchDao);
+            return pbmngr.getPostBoxPage().getPage();
+        }
     }
 
     @Transactional

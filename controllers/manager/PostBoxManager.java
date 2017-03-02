@@ -59,29 +59,29 @@ public class PostBoxManager {
         return postBox;
     }
 
-    private boolean setSentLetters(LettersBoxBunchDao lettersBoxBunchDao){
+    public boolean setSentLetters(LettersBoxBunchDao lettersBoxBunchDao){
         bunches = lettersBoxBunchDao.findByPostBox(postBox);
         if (bunches!=null&&bunches.size()>0){
             ArrayList<Letter> sentLetters = new ArrayList<>();
             for (LetterBoxBunch b: bunches){
-                if (b.getRelation().equals(Relation.SENT)){
+                if (b.getRelation().equals(Relation.SENT)&&!b.isDeleted()){
                     sentLetters.add(b.getLetter());
                 }
             }
             if(sentLetters.size()>0){
-                postBoxPage.setSentLetters(sentLetters);
+                postBoxPage.setSentLetters(sentLetters, sessionId);
                 return true;
-            }
-        }
+            } else postBoxPage.noLettersFound();
+        } else postBoxPage.noLettersFound();
         return false;
-    };
+    }
 
     public boolean setReceivedLetters(LettersBoxBunchDao lettersBoxBunchDao) {
         bunches = lettersBoxBunchDao.findByPostBox(postBox);
         if (bunches!=null&&bunches.size()>0){
             ArrayList<Letter> receivedLetters = new ArrayList<>();
             for (LetterBoxBunch b: bunches){
-                if (b.getRelation().equals(Relation.RECEIVED)){
+                if (b.getRelation().equals(Relation.RECEIVED)&&!b.isDeleted()){
                     receivedLetters.add(b.getLetter());
                 }
             }
@@ -89,8 +89,8 @@ public class PostBoxManager {
             if(receivedLetters.size()>0){
                 postBoxPage.setReceivedLetters(receivedLetters, sessionId);
                 return true;
-            }
-        }
+            }else postBoxPage.noLettersFound();
+        }else postBoxPage.noLettersFound();
         return false;
     }
 

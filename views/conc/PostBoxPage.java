@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class PostBoxPage extends Page {
     private final String sendLetterAction = "/letter/";
     private final String viewLetterAction = "/postbox/view";
+    private final String deleteLetterAction = "/letter/delete";
+
     private final String viewSentLettersAction = "/postbox/sent";
     private final String viewReceivedLettersAction = "/postbox/received";
 
@@ -47,23 +49,31 @@ public class PostBoxPage extends Page {
         body.addElement(lettersList);
         super.setBody(body);
     }
-    public PostBoxPage setSentLetters(ArrayList<Letter> letters){
+    public PostBoxPage setSentLetters(ArrayList<Letter> letters, String sessId){
         lettersList.clear();
-        SentLetterItem item = new SentLetterItem(viewLetterAction);
-        for(Letter let:letters){
-           item.setletter(let);
-           lettersList.addElement(item.toStrring());
+
+        SentLetterItem item = new SentLetterItem(viewLetterAction, deleteLetterAction, sessId);
+        for(int i=letters.size()-1; i>=0;i--){
+            item.setletter(letters.get(i));
+            lettersList.addElement(item.toString());
         }
         return this;
     }
-
     public PostBoxPage setReceivedLetters(ArrayList<Letter> letters, String sessId){
         lettersList.clear();
-        ReceivedLetterItem item = new ReceivedLetterItem(viewLetterAction, sessId);
-        for(Letter let:letters){
-            item.setletter(let);
+        ReceivedLetterItem item = new ReceivedLetterItem(viewLetterAction, deleteLetterAction, sessId);
+        for(int i=letters.size()-1; i>=0;i--){
+            item.setletter(letters.get(i));
             lettersList.addElement(item.toString());
-            }
+        }
+
+        return this;
+    }
+    public PostBoxPage noLettersFound (){
+        lettersList.clear();
+
+            lettersList.addElement("no letters found");
+
         return this;
     }
     public PostBoxPage setWarning (String warning){

@@ -26,9 +26,12 @@ public class Letter implements Serializable{
         return id;
     }
 
-
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean equals (Letter other){
+        return other.getId()==id;
     }
 
     public String getSubject() {

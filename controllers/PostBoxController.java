@@ -34,29 +34,31 @@ public class PostBoxController {
     private LettersBoxBunchDao lettersBoxBunchDao;
 
 
-
-
     @RequestMapping(value = "/received", method = RequestMethod.GET)
     @ResponseBody
-    public String received (@RequestParam(value = "sessionId", required = false) String sessionId) {
+    public String received(@RequestParam(value = "sessionId", required = false) String sessionId) {
 
-            if (sessionId!=null){
-                PostBoxManager pbm = bag.getManager(sessionId);
-                pbm.setReceivedLetters(lettersBoxBunchDao);
-                return pbm.getPostBoxPage().setInfo("Received letters").getPage();
+        if (sessionId != null) {
+            PostBoxManager pbm = bag.getManager(sessionId);
+                if (pbm == null) return new WelcomePage().getPage();
+            pbm.setReceivedLetters(lettersBoxBunchDao);
+            return pbm.getPostBoxPage().setInfo("Received letters").getPage();
 
-            } else  return new WelcomePage().setInfo("session expired").getPage();
+        } else return new WelcomePage().getPage();
 
     }
 
 
-
     @RequestMapping(value = "/sent", method = RequestMethod.GET)
     @ResponseBody
-    public String sent (String sessionId){
-        PostBoxManager pbManager = bag.getManager(sessionId);
+    public String sent(String sessionId) {
+        if (sessionId != null) {
+            PostBoxManager pbm = bag.getManager(sessionId);
+                if (pbm == null) return new WelcomePage().getPage();
+            pbm.setSentLetters(lettersBoxBunchDao);
+            return pbm.getPostBoxPage().setInfo("Sent letters").getPage();
 
-        return pbManager.getPostBoxPage().getPage();
+        } else return new WelcomePage().setInfo("session expired").getPage();
 
     }
 
@@ -65,13 +67,12 @@ public class PostBoxController {
     public String view(@WebParam String sessionId,
                        @WebParam String letterId
     ) {
-        if (sessionId == null||letterId==null) {
-            return new WelcomePage().setWarning("no session id received").getPage();
+        if (sessionId == null || letterId == null) {
+            return new WelcomePage().getPage();
 
         }
         LetterPage letterPage = new LetterPage();
         letterPage.setSessionId(sessionId);
-        System.out.println(letterId);
         Letter letter = letterDao.findOne(Long.parseLong(letterId));
 
         return letterPage.setletter(letter).getPage();

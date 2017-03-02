@@ -13,12 +13,14 @@ import sb_email.views.abstr.layouts.HtmlPlainFormLayout;
  */
 public class ReceivedLetterItem {
     String action;
+    String deleteAction;
     String content;
     String letterId;
 
 
-    public ReceivedLetterItem(String action, String sessionId) {
+    public ReceivedLetterItem(String action, String deleteAction, String sessionId) {
         this.action = action + "?"+"sessionId="+sessionId+"&letterId=";
+        this.deleteAction = deleteAction + "?"+"sessionId="+sessionId+"&letterId=";
     }
 
     public void setletter(Letter letter){
@@ -35,7 +37,7 @@ public class ReceivedLetterItem {
     }
 
     public String toString(){
-        return Wraper.a(content, action+letterId);
+        return Wraper.a(content, action+letterId)+" "+Wraper.a("Delete", deleteAction+letterId);
     }
 
 
