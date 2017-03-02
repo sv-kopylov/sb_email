@@ -78,4 +78,12 @@ public class PostBoxController {
         return letterPage.setletter(letter).getPage();
     }
 
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @ResponseBody
+    public String logout(@WebParam String sessionId) {
+        bag.removeManager(sessionId);
+        return new WelcomePage().getPage();
+
+        }
+
 }

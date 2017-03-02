@@ -28,4 +28,8 @@ public class Bag {
         return treeMap.get(sessionId);
     }
 
+    public void removeManager(String sessionId){
+        treeMap.remove(sessionId);
+    }
+
 }
