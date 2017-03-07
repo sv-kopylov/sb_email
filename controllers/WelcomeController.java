@@ -14,6 +14,7 @@ import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
 import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.WelcomePage;
+import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,7 @@ public class WelcomeController {
         System.out.println("request received");
 
         if (login == null || password == null) {
+            System.out.println("something equals null");
             return wp.setInfo("Please enter your login & password for enter").getPage();
         }
 
@@ -74,7 +76,9 @@ public class WelcomeController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public String welcome (){
-        return wp.getPage();
+//        return wp.getPage();
+
+        return new P_Welcome().setInfo("please enter smth").getPage();
     }
 
 }

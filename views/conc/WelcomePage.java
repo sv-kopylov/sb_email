@@ -24,8 +24,8 @@ public class WelcomePage extends Page{
 
         HtmlForm loginForm = new HtmlForm("POST", action);
         loginForm.setLayout(new Html2ColFormLayout());
-        loginForm.addInput(new HtmlInput("login", InputType.text));
-        loginForm.addInput(new HtmlInput("password", InputType.text));
+        loginForm.addInput(new HtmlInput("login", "login", InputType.text));
+        loginForm.addInput(new HtmlInput("password","passwd", InputType.text));
         loginForm.setSubmitComandName("LOG IN");
 
 

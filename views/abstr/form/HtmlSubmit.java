@@ -5,7 +5,7 @@ package sb_email.views.abstr.form;
  */
 public class HtmlSubmit extends HtmlInput {
     public HtmlSubmit(String buttonName) {
-        super("", InputType.submit);
+        super("", "", InputType.submit);
         super.removaAttribute("name");
         super.removaAttribute("id");
         super.setAttribute("value",buttonName);

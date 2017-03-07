@@ -5,7 +5,7 @@ package sb_email.views.abstr.form;
  */
 public class HtmlHiddenInput extends HtmlInput{
     public HtmlHiddenInput(String name) {
-        super(name, InputType.hidden);
+        super(name, "", InputType.hidden);
         super.removaAttribute("id");
         super.setLabel("");
     }

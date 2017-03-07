@@ -22,7 +22,6 @@ public class Wraper {
     public static String h2(String text){
         return "<h2>"+text+"</h2>\r\n";
     }
-
     public static String h3(String text){
         return "<h3>"+text+"</h3>\r\n";
     }
