@@ -13,15 +13,7 @@ import sb_email.dao.LettersBoxBunchDao;
 import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
 import sb_email.views.conc.PostBoxPage;
-import sb_email.views.conc.WelcomePage;
 import sb_email.views.conc.reachdesign.pages.P_Welcome;
-
-import javax.jws.WebParam;
-import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by Сергей on 27.01.2017.
@@ -45,7 +37,7 @@ public class WelcomeController {
     private String userPassword;
     private String userName;
     private PostBox usersBox;
-    private WelcomePage wp = new WelcomePage();
+    private P_Welcome welcomePage = new P_Welcome();
     private PostBoxPage pbp = new PostBoxPage();
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -57,7 +49,7 @@ public class WelcomeController {
 
         if (login == null || password == null) {
             System.out.println("something equals null");
-            return wp.setInfo("Please enter your login & password for enter").getPage();
+            return welcomePage.setInfo("Please enter your login & password for enter").getPage();
         }
 
         if ((usersBox=postBoxDao.findByLogin(login)) != null) {
@@ -69,16 +61,15 @@ public class WelcomeController {
        logger.debug("heree postBox manager should be added into the Bag");
                 return pbm.getPostBoxPage().setInfo("Perhaps tou are logged in").getPage();
 
-                } else  return wp.setWarning("password is incorrect").getPage();
-        } else return wp.setWarning("user "+login+" does not exists").getPage();
+                } else  return welcomePage.setWarning("password is incorrect").getPage();
+        } else return welcomePage.setWarning("user "+login+" does not exists").getPage();
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public String welcome (){
-//        return wp.getPage();
+        return welcomePage.getPage();
 
-        return new P_Welcome().setInfo("please enter smth").getPage();
     }
 
 }

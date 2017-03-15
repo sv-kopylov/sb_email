@@ -13,6 +13,8 @@ import sb_email.persist.PostBox;
 import sb_email.views.conc.CreatingPage;
 import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.WelcomePage;
+import sb_email.views.conc.reachdesign.pages.P_CreatingBox;
+import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
@@ -32,15 +34,20 @@ public class CreateController {
     private String userPassword;
     private String userName;
     private PostBox usersBox;
-    private CreatingPage creatingPage = new CreatingPage();
+    private P_CreatingBox creatingPage = new P_CreatingBox();
 
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public String create(HttpServletRequest req, @WebParam String login, @WebParam String password, @WebParam String name) {
+    public String create(@WebParam String login, @WebParam String password, @WebParam String name) {
+
         if (login == null || password == null||name==null) {
             return creatingPage.setInfo("Enter your details for register postbox").getPage();
         }
+        if (login.length() == 0 || password.length() == 0||name.length()==0) {
+            return creatingPage.setInfo("Enter your details for register postbox").getPage();
+        }
+
 
         if (postBoxDao.findByLogin(login) != null) {
             return creatingPage.setWarning("user "+login+" already exists").getPage();
@@ -53,7 +60,7 @@ public class CreateController {
 
         postBoxDao.save(usersBox);
 
-        return new WelcomePage().setInfo("Post box successfully created," +
+        return new P_Welcome().setInfo("Post box successfully created," +
                 " please login for access to your account").getPage();
 
     }
@@ -61,7 +68,8 @@ public class CreateController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     @ResponseBody
     public String getEmptyForm (){
-        return creatingPage.setInfo("Enter your details for register postbox").getPage();
+     return creatingPage.setInfo("Enter your details for register postbox").getPage();
+
     }
 
 

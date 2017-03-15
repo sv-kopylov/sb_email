@@ -9,12 +9,12 @@ import sb_email.views.abstr.form.HtmlHiddenInput;
 /**
  * Created by Сергей on 03.03.2017.
  */
-public class OtherPagesBodyHeader extends HtmlElement {
+public class PostBoxPageBodyHeader extends HtmlElement {
     HtmlForm logoutForm;
     HtmlHiddenInput sessionIdHidden = new HtmlHiddenInput("sessionId");
     private String userName;
 
-    public OtherPagesBodyHeader() {
+    public PostBoxPageBodyHeader() {
         super("header");
         logoutForm = new HtmlForm("POST", ViewSettings.logoutFormAction);
         logoutForm.addInput(sessionIdHidden);
