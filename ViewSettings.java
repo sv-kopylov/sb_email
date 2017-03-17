@@ -14,6 +14,7 @@ public class ViewSettings {
     public static final String fromLetterMark = "FROM:";
     public static final String toLetterMark = "TO:";
     public static final String subjectLetterMark = "SUBJECT:";
+    public static final String noLettersFound = "No letters found";
 
 
 
@@ -21,6 +22,7 @@ public class ViewSettings {
     public static final String viewSentLettersLink = "Sent letters";
     public static final String viewReceivedLettersLink = "Received letters";
     public static final String createPostBoxLink = "Create new postbox";
+    public static final String deleteLetterLink = "Delete";
 
 
 //ACTIONS/////

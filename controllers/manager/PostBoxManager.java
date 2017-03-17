@@ -1,12 +1,14 @@
 package sb_email.controllers.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import sb_email.ViewSettings;
 import sb_email.dao.LettersBoxBunchDao;
 import sb_email.persist.Letter;
 import sb_email.persist.LetterBoxBunch;
 import sb_email.persist.PostBox;
 import sb_email.persist.Relation;
 import sb_email.views.conc.PostBoxPage;
+import sb_email.views.conc.reachdesign.pages.P_PostBox;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -18,8 +20,7 @@ import java.util.List;
 public class PostBoxManager {
 
 
-
-    private PostBoxPage postBoxPage = new PostBoxPage();
+    private P_PostBox postBoxPage = new P_PostBox();
 
     private String sessionId;
     private PostBox postBox;
@@ -40,58 +41,56 @@ public class PostBoxManager {
         return sessionId;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
     public void setTimeStamp() {
         timeStamp = GregorianCalendar.getInstance().getTimeInMillis();
     }
 
-    public PostBoxPage getPostBoxPage(){
-        postBoxPage.setSessionId(sessionId);
+    public P_PostBox getPostBoxPage() {
         setTimeStamp();
         return postBoxPage;
     }
 
-    public PostBox getPostBox(){
+    public PostBox getPostBox() {
         setTimeStamp();
         return postBox;
     }
 
-    public boolean setSentLetters(LettersBoxBunchDao lettersBoxBunchDao){
+    public boolean setSentLetters(LettersBoxBunchDao lettersBoxBunchDao) {
         bunches = lettersBoxBunchDao.findByPostBox(postBox);
-        if (bunches!=null&&bunches.size()>0){
-            ArrayList<Letter> sentLetters = new ArrayList<>();
-            for (LetterBoxBunch b: bunches){
-                if (b.getRelation().equals(Relation.SENT)&&!b.isDeleted()){
-                    sentLetters.add(b.getLetter());
-                }
+        if (bunches == null && bunches.isEmpty()) {
+            postBoxPage.setInfo(ViewSettings.noLettersFound);
+            return false;
+        }
+        for (int i = 0; i < bunches.size(); i++) {
+            if (bunches.get(i).getRelation().equals(Relation.RECEIVED)) {
+                bunches.remove(i);
             }
-            if(sentLetters.size()>0){
-                postBoxPage.setSentLetters(sentLetters, sessionId);
-                return true;
-            } else postBoxPage.noLettersFound();
-        } else postBoxPage.noLettersFound();
-        return false;
+        }
+        if (bunches.isEmpty()) {
+            postBoxPage.setInfo(ViewSettings.noLettersFound);
+            return false;
+        }
+        postBoxPage.setLetters(bunches);
+        return true;
     }
 
     public boolean setReceivedLetters(LettersBoxBunchDao lettersBoxBunchDao) {
         bunches = lettersBoxBunchDao.findByPostBox(postBox);
-        if (bunches!=null&&bunches.size()>0){
-            ArrayList<Letter> receivedLetters = new ArrayList<>();
-            for (LetterBoxBunch b: bunches){
-                if (b.getRelation().equals(Relation.RECEIVED)&&!b.isDeleted()){
-                    receivedLetters.add(b.getLetter());
-                }
+        if (bunches == null && bunches.isEmpty()) {
+            postBoxPage.setInfo(ViewSettings.noLettersFound);
+            return false;
+        }
+        for (int i = 0; i < bunches.size(); i++) {
+            if (bunches.get(i).getRelation().equals(Relation.SENT)) {
+                bunches.remove(i);
             }
-
-            if(receivedLetters.size()>0){
-                postBoxPage.setReceivedLetters(receivedLetters, sessionId);
-                return true;
-            }else postBoxPage.noLettersFound();
-        }else postBoxPage.noLettersFound();
-        return false;
+        }
+        if (bunches.isEmpty()) {
+            postBoxPage.setInfo(ViewSettings.noLettersFound);
+            return false;
+        }
+        postBoxPage.setLetters(bunches);
+        return true;
     }
 
     @Override
@@ -104,11 +103,8 @@ public class PostBoxManager {
         return postBox.getLogin().equals(that.postBox.getLogin());
     }
 
-    public PostBoxPage showSent(){
-
-
+    public P_PostBox showSent() {
         return postBoxPage;
-
     }
 
     public Long getTimeStamp() {

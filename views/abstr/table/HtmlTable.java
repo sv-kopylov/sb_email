@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class HtmlTable extends HtmlElement {
     ArrayList<Row> rows = new ArrayList<>();
-    protected HtmlTable() {
+    public HtmlTable() {
         super("table");
     }
 
@@ -31,6 +31,10 @@ public class HtmlTable extends HtmlElement {
     public int addRow(Row row){
         rows.add(row);
         return rows.indexOf(row);
+    }
+
+    public void clear(){
+        rows.clear();
     }
 
 }
