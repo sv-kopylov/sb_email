@@ -31,10 +31,10 @@ public abstract class HtmlElement implements Element {
         if (hasCloseTag()) {
             sb.append(">\r\n");
             sb.append(content());
-            sb.append("<");
+            sb.append("</");
             sb.append(mainTag);
         }
-        sb.append("/>\r\n");
+        sb.append(">\r\n");
         return sb.toString();
     }
 

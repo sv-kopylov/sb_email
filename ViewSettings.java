@@ -11,6 +11,7 @@ public class ViewSettings {
     public static final String nameInput = "NAME";
     public static final String createBoxButtonName = "CREATE";
     public static final String loginButtonName = "ENTER";
+    public static final String logoutButtonName = "LOGOUT";
     public static final String fromLetterMark = "FROM:";
     public static final String toLetterMark = "TO:";
     public static final String subjectLetterMark = "SUBJECT:";
@@ -23,6 +24,7 @@ public class ViewSettings {
     public static final String viewReceivedLettersLink = "Received letters";
     public static final String createPostBoxLink = "Create new postbox";
     public static final String deleteLetterLink = "Delete";
+    public static final String viewLetterLink = "View";
 
 
 //ACTIONS/////

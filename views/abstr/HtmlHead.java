@@ -10,6 +10,8 @@ public class HtmlHead extends HtmlElement {
     public HtmlHead(String tytle) {
         super("head");
         addItem("<title>"+tytle+"</title>");
+        addItem("<meta charset = \"utf-8\">");
+        addItem("<link rel =\"stylesheet\" href = \"/css/postbox.css\">");
     }
 
     public int addItem (String item){

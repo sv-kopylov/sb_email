@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sb_email.ViewSettings;
 import sb_email.controllers.manager.Bag;
 import sb_email.controllers.manager.IdGen;
 import sb_email.controllers.manager.PostBoxManager;
@@ -45,8 +46,6 @@ public class WelcomeController {
     public String login (@RequestParam(value = "login", required = false) String login,
                          @RequestParam(value = "password", required = false) String password) {
 
-        System.out.println("request received");
-
         if (login == null || password == null) {
             System.out.println("something equals null");
             return welcomePage.setInfo("Please enter your login & password for enter").getPage();
@@ -59,7 +58,7 @@ public class WelcomeController {
                 bag.addManager(pbm);
                 pbm.setReceivedLetters(lettersBoxBunchDao);
        logger.debug("heree postBox manager should be added into the Bag");
-                return pbm.getPostBoxPage().setInfo("Perhaps tou are logged in").getPage();
+                return pbm.getPostBoxPage().getPage();
 
                 } else  return welcomePage.setWarning("password is incorrect").getPage();
         } else return welcomePage.setWarning("user "+login+" does not exists").getPage();

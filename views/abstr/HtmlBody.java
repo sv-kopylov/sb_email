@@ -27,9 +27,11 @@ public class HtmlBody extends HtmlElement {
         if(bodyHeader!=null) sb.append(bodyHeader.toString());
         if(dodyAside!=null) sb.append(dodyAside.toString());
             if(bodyContent!=null&&bodyContent.size()>0){
+                sb.append("<div id=\"bodyContent\">");
                 for(HtmlElement elem:bodyContent){
                     sb.append(elem.toString());
                 }
+                sb.append("</div>");
             }
         if(bodyFooter!=null) sb.append(bodyFooter.toString());
 

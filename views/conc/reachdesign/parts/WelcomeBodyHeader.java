@@ -21,7 +21,7 @@ public class WelcomeBodyHeader extends HtmlElement {
     public WelcomeBodyHeader() {
         super("header");
         loginForm = new HtmlForm("POST", ViewSettings.loginFormAction);
-        loginForm.setLayout(new HtmlTableLayout().setAttribute("bgcolor","green"));
+        loginForm.setLayout(new HtmlTableLayout());
         loginForm.addInput(new HtmlInput("login",ViewSettings.loginInput, InputType.text));
         loginForm.addInput(new HtmlInput("password",ViewSettings.passwordInput, InputType.text));
         loginForm.setSubmitComandName(ViewSettings.loginButtonName);

@@ -16,12 +16,13 @@ import java.util.List;
 public class P_PostBox extends P_MasterTemplate {
 
     private String sessionId;
-    private PostBoxPageBodyHeader header = new PostBoxPageBodyHeader();
+    private PostBoxPageBodyHeader header;
     private PostBoxPageAside aside = new PostBoxPageAside();
     private LettersTable lettersTable = new LettersTable();
 
-    public P_PostBox() {
+    public P_PostBox(String tytle) {
         super(ViewSettings.grandTytle);
+        header = new PostBoxPageBodyHeader(tytle);
         super.getBody().setBodyHeader(header);
         super.getBody().setDodyAside(aside);
         super.getBody().addElement(lettersTable);

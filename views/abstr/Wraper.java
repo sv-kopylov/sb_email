@@ -15,6 +15,9 @@ public class Wraper {
     public static String div(String text){
             return "<div>"+text+"</div>\r\n";
         }
+    public static String div(String text, String id){
+        return "<div id = \""+id+"\">"+text+"</div>\r\n";
+    }
 
     public static String h1(String text){
         return "<h1>"+text+"</h1>\r\n";
