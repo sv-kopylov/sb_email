@@ -20,6 +20,7 @@ import sb_email.persist.Relation;
 import sb_email.views.conc.LetterPage;
 import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.WelcomePage;
+import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +73,7 @@ public class LetterController {
                        @WebParam String letterBody,
                        @WebParam String receiver) {
         if (sessionId == null) {
-            return new WelcomePage().setWarning("no session id received").getPage();
+            return new P_Welcome().setWarning("no session id received").getPage();
 
         } else {
             letterPage.setSessionId(sessionId);
@@ -99,11 +100,11 @@ public class LetterController {
         String result = insertNecessary(letter, receiver, sessionId);
 
         if (result.equals("nullpointer")){
-            return new WelcomePage().setWarning("nullpointer in insertNecessary").getPage();
+            return new P_Welcome().setWarning("nullpointer in insertNecessary").getPage();
         }
 
         if (result.equals("timeout")){
-            return new WelcomePage().setWarning("no postBoxManager in context, perhaps deleted by timeout").getPage();
+            return new P_Welcome().setWarning("no postBoxManager in context, perhaps deleted by timeout").getPage();
         }
 
 
@@ -114,7 +115,7 @@ public class LetterController {
     @ResponseBody
     public String prepareLetterPage (@RequestParam(value = "sessionId", required = false) String sessionId){
         if(bag.getManager(sessionId)==null){
-            return new WelcomePage().getPage();
+            return new P_Welcome().getPage();
         }
         letterPage.setSessionId(sessionId);
         return letterPage.setInfo("DEBUG").getPage();
@@ -126,7 +127,7 @@ public class LetterController {
                           @WebParam String letterId
     )  {
         PostBoxManager pbmngr = bag.getManager(sessionId);
-        if (pbmngr==null) return new WelcomePage().getPage();
+        if (pbmngr==null) return new P_Welcome().getPage();
 
         PostBox pb = pbmngr.getPostBox();
         Letter letter =letterDao.findOne(Long.parseLong(letterId));

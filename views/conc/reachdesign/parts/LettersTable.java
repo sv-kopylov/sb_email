@@ -9,7 +9,13 @@ import java.util.List;
  * Created by Сергей on 15.03.2017.
  */
 public class LettersTable extends HtmlTable{
+
     private String sessionId;
+    private LettersTableHead tableHead = new LettersTableHead();
+
+    public LettersTable() {
+        setAttribute("class", "LettersTable");
+    }
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
@@ -20,6 +26,8 @@ public class LettersTable extends HtmlTable{
             return;
         }
         clear();
+        tableHead.setRelation(letters.get(0).getRelation());
+        this.addRow(tableHead);
         LetterLine letterLine;
         for (LetterBoxBunch lbb: letters){
             letterLine = new LetterLine(lbb, sessionId);

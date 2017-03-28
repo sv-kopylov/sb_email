@@ -28,23 +28,25 @@ public class LetterLine extends Row {
     protected String content() {
         StringBuilder sb = new StringBuilder();
         if(letterBoxBunch.getRelation().equals(Relation.RECEIVED)){
-            sb.append(Wraper.td(dateFormat.format(letterBoxBunch.getDate())));
-            sb.append(Wraper.td(ViewSettings.fromLetterMark));
+
+//            sb.append(Wraper.td(ViewSettings.fromLetterMark));
             sb.append(Wraper.td(letterBoxBunch.getLetter().getSender()));
-            sb.append(Wraper.td(ViewSettings.subjectLetterMark));
+//            sb.append(Wraper.td(ViewSettings.subjectLetterMark));
             sb.append(Wraper.td(letterBoxBunch.getLetter().getSubject()));
             sb.append(Wraper.td(preview()));
+            sb.append(Wraper.td(dateFormat.format(letterBoxBunch.getDate())));
             sb.append(Wraper.td(Wraper.a(ViewSettings.viewLetterLink,viewAction)));
             sb.append(Wraper.td(Wraper.a(ViewSettings.deleteLetterLink, deleteAction)));
 
 
         } else if (letterBoxBunch.getRelation().equals(Relation.SENT)){
-            sb.append(Wraper.td(dateFormat.format(letterBoxBunch.getDate())));
-            sb.append(Wraper.td(ViewSettings.toLetterMark));
+
+//            sb.append(Wraper.td(ViewSettings.toLetterMark));
             sb.append(Wraper.td(letterBoxBunch.getLetter().getReceiver()));
-            sb.append(Wraper.td(ViewSettings.subjectLetterMark));
+//            sb.append(Wraper.td(ViewSettings.subjectLetterMark));
             sb.append(Wraper.td(letterBoxBunch.getLetter().getSubject()));
             sb.append(Wraper.td(preview()));
+            sb.append(Wraper.td(dateFormat.format(letterBoxBunch.getDate())));
             sb.append(Wraper.td(Wraper.a(ViewSettings.viewLetterLink,viewAction)));
             sb.append(Wraper.td(Wraper.a(ViewSettings.deleteLetterLink, deleteAction)));
         }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class PostBoxPageAside extends HtmlElement {
 
-    private HtmlForm logoutForm;
+
     private HtmlHiddenInput sessionIdHidden = new HtmlHiddenInput("sessionId");
 
     private HtmlA sentLettersLink = new HtmlA(ViewSettings.viewSentLettersLink);
@@ -23,9 +23,7 @@ public class PostBoxPageAside extends HtmlElement {
 
     public PostBoxPageAside() {
         super("aside");
-        logoutForm = new HtmlForm("POST", ViewSettings.logoutFormAction);
-        logoutForm.addInput(sessionIdHidden);
-        logoutForm.setAction(ViewSettings.logoutFormAction);
+
 
     }
 
@@ -40,8 +38,6 @@ public class PostBoxPageAside extends HtmlElement {
         sb.append(sentLettersLink.toString());
         sb.append(Wraper.br());
         sb.append(receivedLettersLink.toString());
-        sb.append(Wraper.br());
-        sb.append(logoutForm.toString());
         return sb.toString();
     }
 

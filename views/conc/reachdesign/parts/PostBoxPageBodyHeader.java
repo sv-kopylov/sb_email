@@ -34,7 +34,7 @@ public class PostBoxPageBodyHeader extends HtmlElement {
     protected String content() {
         StringBuilder sb = new StringBuilder();
         sb.append(Wraper.h1(tytle));
-
+        
         sb.append(Wraper.div(logoutForm.toString(), "logout"));
          return sb.toString();
 

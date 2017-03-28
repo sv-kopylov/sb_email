@@ -15,6 +15,7 @@ import sb_email.dao.LettersBoxBunchDao;
 import sb_email.persist.Letter;
 import sb_email.views.conc.LetterPage;
 import sb_email.views.conc.WelcomePage;
+import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
@@ -40,11 +41,11 @@ public class PostBoxController {
 
         if (sessionId != null) {
             PostBoxManager pbm = bag.getManager(sessionId);
-                if (pbm == null) return new WelcomePage().getPage();
+                if (pbm == null) return new P_Welcome().getPage();
             pbm.setReceivedLetters(lettersBoxBunchDao);
             return pbm.getPostBoxPage().setInfo("Received letters").getPage();
 
-        } else return new WelcomePage().getPage();
+        } else return new P_Welcome().getPage();
 
     }
 
@@ -54,11 +55,11 @@ public class PostBoxController {
     public String sent(String sessionId) {
         if (sessionId != null) {
             PostBoxManager pbm = bag.getManager(sessionId);
-                if (pbm == null) return new WelcomePage().getPage();
+                if (pbm == null) return new P_Welcome().getPage();
             pbm.setSentLetters(lettersBoxBunchDao);
             return pbm.getPostBoxPage().setInfo("Sent letters").getPage();
 
-        } else return new WelcomePage().setInfo("session expired").getPage();
+        } else return new P_Welcome().setInfo("session expired").getPage();
 
     }
 
@@ -68,7 +69,7 @@ public class PostBoxController {
                        @WebParam String letterId
     ) {
         if (sessionId == null || letterId == null) {
-            return new WelcomePage().getPage();
+            return new P_Welcome().getPage();
 
         }
         LetterPage letterPage = new LetterPage();
@@ -82,7 +83,7 @@ public class PostBoxController {
     @ResponseBody
     public String logout(@WebParam String sessionId) {
         bag.removeManager(sessionId);
-        return new WelcomePage().getPage();
+        return new P_Welcome().getPage();
 
         }
 
