@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class HtmlForm extends HtmlElement {
     private ArrayList<HtmlInput> inputs = new ArrayList<>();
+    private ArrayList<HtmlElement> elements = new ArrayList<>();
     private HtmlSubmit submitButton = new HtmlSubmit("submit");
     private HtmlFormLayout layout = new HtmlPlainFormLayout();
 
@@ -32,6 +33,11 @@ public class HtmlForm extends HtmlElement {
         if (!inputs.isEmpty()){
             sb.append(layout.place(inputs));
         }
+        if (!elements.isEmpty()){
+            for(HtmlElement element:elements){
+                sb.append(element.toString());
+            }
+        }
         sb.append(submitButton.toString());
         return sb.toString();
     }
@@ -50,6 +56,10 @@ public class HtmlForm extends HtmlElement {
     public int addInput(HtmlInput input){
         inputs.add(input);
         return inputs.indexOf(input);
+    }
+    public int addElement(HtmlElement elem){
+        elements.add(elem);
+        return elements.indexOf(elem);
     }
 }
 

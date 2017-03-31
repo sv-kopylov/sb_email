@@ -5,26 +5,18 @@ import sb_email.views.abstr.HtmlBody;
 import sb_email.views.abstr.HtmlElement;
 import sb_email.views.abstr.form.*;
 import sb_email.views.abstr.layouts.HtmlTableLayout;
-import sb_email.views.conc.reachdesign.parts.Notifycation;
-import sb_email.views.conc.reachdesign.parts.PostBoxPageBodyHeader;
-import sb_email.views.conc.reachdesign.parts.P_MasterTemplate;
-import sb_email.views.conc.reachdesign.parts.SimpleBodyHeader;
+import sb_email.views.conc.reachdesign.parts.*;
 
 /**
  * Created by Сергей on 08.03.2017.
  */
 public class P_CreatingBox extends P_MasterTemplate {
-
+private CreatingBoxAside creatingBoxAside;
 
     public P_CreatingBox() {
         super(ViewSettings.grandTytle);
-        HtmlForm form = new HtmlForm("POST", ViewSettings.createBoxFormAction);
-        form.addInput(new HtmlInput("name",ViewSettings.nameInput, InputType.text));
-        form.addInput(new HtmlInput("login",ViewSettings.loginInput, InputType.text));
-        form.addInput(new HtmlInput("password", ViewSettings.passwordInput, InputType.text));
-        form.setSubmitComandName(ViewSettings.createBoxButtonName);
-        form.setLayout(new HtmlTableLayout());
-        getBody().addElement(form);
+       creatingBoxAside = new CreatingBoxAside();
+        getBody().setDodyAside(creatingBoxAside);
     }
 
     @Override

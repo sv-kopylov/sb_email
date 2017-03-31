@@ -9,9 +9,12 @@ public class ViewSettings {
     public static final String loginInput = "LOGIN";
     public static final String passwordInput = "PASSWORD";
     public static final String nameInput = "NAME";
+    public static final String receiverInput = "RECEIVER";
+    public static final String subjectInput = "SUBJECT";
     public static final String createBoxButtonName = "CREATE";
     public static final String loginButtonName = "ENTER";
     public static final String logoutButtonName = "LOGOUT";
+    public static final String sendLetterButtonName = "SEND";
     public static final String fromLetterMark = "FROM:";
     public static final String toLetterMark = "TO:";
     public static final String subjectLetterMark = "SUBJECT:";
@@ -36,4 +39,5 @@ public class ViewSettings {
     public static final String viewReceivedLettersAction = "/postbox/received";
     public static final String viewLetterAction = "/postbox/view";
     public static final String deleteLetterAction = "/letter/delete";
+    public static final String sendLetterAction = "/letter/send";
 }

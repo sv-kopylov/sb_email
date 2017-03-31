@@ -6,15 +6,16 @@ import sb_email.views.abstr.HtmlElement;
  * Created by Сергей on 16.02.2017.
  */
 public class HtmlTextArea extends HtmlElement {
-     String value = "";
-    protected HtmlTextArea() {
+    String value = "";
+    public HtmlTextArea(String name) {
         super("textarea");
     }
-
     @Override
     protected boolean hasCloseTag() {
-        return false;
+        return true;
     }
+
+
 
     @Override
     protected String content() {

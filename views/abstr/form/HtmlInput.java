@@ -7,11 +7,11 @@ import sb_email.views.abstr.HtmlElement;
  */
 public class HtmlInput extends HtmlElement {
     private String label;
-    public HtmlInput(String id, String label, InputType type) {
+    public HtmlInput(String name, String label, InputType type) {
+
         super("input");
         super.setAttribute("type", type.toString());
-        super.setAttribute("name", id);
-        super.setAttribute("id", id);
+        super.setAttribute("name", name);
         this.label = label;
     }
 

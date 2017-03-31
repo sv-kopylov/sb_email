@@ -15,6 +15,7 @@ import sb_email.dao.LettersBoxBunchDao;
 import sb_email.persist.Letter;
 import sb_email.views.conc.LetterPage;
 import sb_email.views.conc.WelcomePage;
+import sb_email.views.conc.reachdesign.pages.P_Letter;
 import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 import javax.jws.WebParam;
@@ -72,8 +73,7 @@ public class PostBoxController {
             return new P_Welcome().getPage();
 
         }
-        LetterPage letterPage = new LetterPage();
-        letterPage.setSessionId(sessionId);
+        P_Letter letterPage = new P_Letter(sessionId, bag.getManager(sessionId).getPostBox().getTytle());
         Letter letter = letterDao.findOne(Long.parseLong(letterId));
 
         return letterPage.setletter(letter).getPage();

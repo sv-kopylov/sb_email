@@ -31,7 +31,7 @@ public class PostBoxManager {
     public PostBoxManager(String sessionId, PostBox postBox) {
         this.sessionId = sessionId;
         this.postBox = postBox;
-        postBoxPage = new P_PostBox(postBox.getName()+"("+postBox.getLogin()+")");
+        postBoxPage = new P_PostBox(postBox.getTytle());
         postBoxPage.setSessionId(sessionId);
         setTimeStamp();
 

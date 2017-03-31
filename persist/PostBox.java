@@ -52,6 +52,10 @@ public class PostBox implements Serializable {
         this.name = name;
     }
 
+    public String getTytle(){
+        return getName()+"("+getLogin()+")";
+    }
+
 
 
 }

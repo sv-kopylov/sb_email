@@ -20,6 +20,7 @@ import sb_email.persist.Relation;
 import sb_email.views.conc.LetterPage;
 import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.WelcomePage;
+import sb_email.views.conc.reachdesign.pages.P_Letter;
 import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 import javax.jws.WebParam;
@@ -117,8 +118,7 @@ public class LetterController {
         if(bag.getManager(sessionId)==null){
             return new P_Welcome().getPage();
         }
-        letterPage.setSessionId(sessionId);
-        return letterPage.setInfo("DEBUG").getPage();
+        return new P_Letter(sessionId, bag.getManager(sessionId).getPostBox().getTytle()).getPage();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
