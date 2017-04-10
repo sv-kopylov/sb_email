@@ -8,18 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sb_email.controllers.manager.Bag;
-import sb_email.controllers.manager.IdGen;
 import sb_email.controllers.manager.PostBoxManager;
 import sb_email.dao.LetterDao;
 import sb_email.dao.LettersBoxBunchDao;
 import sb_email.persist.Letter;
-import sb_email.views.conc.LetterPage;
-import sb_email.views.conc.WelcomePage;
 import sb_email.views.conc.reachdesign.pages.P_Letter;
 import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 import javax.jws.WebParam;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Сергей on 06.02.2017.
@@ -73,10 +69,13 @@ public class PostBoxController {
             return new P_Welcome().getPage();
 
         }
+        if(bag.getManager(sessionId)==null){
+            return new P_Welcome().getPage();
+        }
         P_Letter letterPage = new P_Letter(sessionId, bag.getManager(sessionId).getPostBox().getTytle());
         Letter letter = letterDao.findOne(Long.parseLong(letterId));
 
-        return letterPage.setletter(letter).getPage();
+        return letterPage.setLetter(letter).getPage();
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST )

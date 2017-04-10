@@ -28,6 +28,7 @@ public class ViewSettings {
     public static final String createPostBoxLink = "Create new postbox";
     public static final String deleteLetterLink = "Delete";
     public static final String viewLetterLink = "View";
+    public static final String newLetterLink = "NEW LETTER";
 
 
 //ACTIONS/////
@@ -40,4 +41,5 @@ public class ViewSettings {
     public static final String viewLetterAction = "/postbox/view";
     public static final String deleteLetterAction = "/letter/delete";
     public static final String sendLetterAction = "/letter/send";
+    public static final String newLetterAction = "/letter";
 }

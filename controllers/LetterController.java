@@ -44,7 +44,7 @@ public class LetterController {
     private PostBoxDao postBoxDao;
     @Autowired
     private Bag bag;
-    private LetterPage letterPage = new LetterPage();
+    private P_Letter letterPage;
 
     private static TreeSet<String> parceReceiver(String initial) {
         TreeSet<String> receivers = new TreeSet<>();
@@ -77,7 +77,7 @@ public class LetterController {
             return new P_Welcome().setWarning("no session id received").getPage();
 
         } else {
-            letterPage.setSessionId(sessionId);
+            letterPage = new P_Letter(sessionId, bag.getManager(sessionId).getPostBox().getTytle());
         }
 
         if (subject != null) {
@@ -112,7 +112,7 @@ public class LetterController {
         return bag.getManager(sessionId).getPostBoxPage().setInfo(result).getPage();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public String prepareLetterPage (@RequestParam(value = "sessionId", required = false) String sessionId){
         if(bag.getManager(sessionId)==null){

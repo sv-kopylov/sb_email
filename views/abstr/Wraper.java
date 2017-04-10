@@ -36,5 +36,8 @@ public class Wraper {
     public static String td(String text){
         return "<td>"+text+"</td>";
     }
+    public static String tr(String text){
+        return "<tr>"+text+"</tr>";
+    }
 
 }

@@ -1,5 +1,6 @@
 package sb_email.controllers.manager;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.util.TreeMap;
 @Component
 @Scope("singleton")
 public class Bag {
+    Logger logger = Logger.getLogger(Bag.class);
     private TreeMap<String, PostBoxManager> treeMap = new TreeMap<>();
 
     public void addManager (PostBoxManager manager){
@@ -22,9 +24,11 @@ public class Bag {
             }
         }
         treeMap.put(manager.getSessionId(), manager);
+        logger.info("muanager puted sessionId: "+manager.getSessionId());
     }
 
     public PostBoxManager getManager (String sessionId){
+        logger.info("request for manager");
         return treeMap.get(sessionId);
     }
 
