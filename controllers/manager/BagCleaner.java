@@ -2,6 +2,7 @@ package sb_email.controllers.manager;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +15,16 @@ import java.util.TreeMap;
 @Component
 public class BagCleaner {
     private static Logger logger = Logger.getLogger(BagCleaner.class);
-    Long TIMEOUT_MILLS = 60000l;
     @Autowired
     Bag bag;
+    private Long TIMEOUT_MILLS;
+    @Value("${my.timeoutMin}")
+    private String timeoutString;
 
-    @Scheduled(fixedRate = 300000l)
+    @Scheduled(fixedRate = 60000l)
     public void cleanBag(){
-        logger.info("Bag cleaning is started");
+        TIMEOUT_MILLS = Long.parseLong(timeoutString)*60000;
+        logger.info("Bag cleaning is started, timeout " + timeoutString);
         TreeMap<String, PostBoxManager> allManagers = bag.getAllManagersMap();
         Long nowTime = GregorianCalendar.getInstance().getTimeInMillis();
         for(String key: allManagers.keySet()){
