@@ -36,4 +36,7 @@ public class Bag {
         treeMap.remove(sessionId);
     }
 
+    public TreeMap<String, PostBoxManager> getAllManagersMap() {
+        return treeMap;
+    }
 }

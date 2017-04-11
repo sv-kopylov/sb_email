@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import sb_email.views.conc.CreatingPage;
 import sb_email.views.conc.WelcomePage;
 
@@ -17,13 +18,10 @@ import sb_email.views.conc.WelcomePage;
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
+@EnableScheduling
 
 public class Application {
     public static void main (String[] args){
-//        WelcomePage wp = new WelcomePage();
-//        CreatingPage cp = new CreatingPage();
-//        System.out.println(cp.getPage());
-
         SpringApplication.run(Application.class, args);
     }
 
