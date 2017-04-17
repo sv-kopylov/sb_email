@@ -60,12 +60,16 @@ public class PostBoxManager {
         bunches = lettersBoxBunchDao.findByPostBox(postBox);
         ArrayList <LetterBoxBunch> sentLetBunches = new ArrayList<>();
         if (bunches == null && bunches.isEmpty()) {
+            postBoxPage.clean();
             postBoxPage.setInfo(ViewSettings.noLettersFound);
             return false;
         }
+        postBoxPage.clean();
         for(int i = bunches.size()-1; i >=0; i--) {
             if (bunches.get(i).getRelation().equals(Relation.SENT)) {
-                sentLetBunches.add(bunches.get(i));
+                if(!bunches.get(i).isDeleted()) {
+                    sentLetBunches.add(bunches.get(i));
+                }
             }
         }
         if (sentLetBunches.isEmpty()) {
@@ -80,15 +84,21 @@ public class PostBoxManager {
         bunches = lettersBoxBunchDao.findByPostBox(postBox);
         ArrayList <LetterBoxBunch> receivedLetBunches = new ArrayList<>();
         if (bunches == null && bunches.isEmpty()) {
+            postBoxPage.clean();
             postBoxPage.setInfo(ViewSettings.noLettersFound);
             return false;
         }
+        postBoxPage.clean();
         for (int i = bunches.size()-1; i >=0; i--) {
             if (bunches.get(i).getRelation().equals(Relation.RECEIVED)) {
-                receivedLetBunches.add(bunches.get(i));
+                if(!bunches.get(i).isDeleted()) {
+                    receivedLetBunches.add(bunches.get(i));
+                   
+                }
             }
         }
         if (receivedLetBunches.isEmpty()) {
+            postBoxPage.clean();
             postBoxPage.setInfo(ViewSettings.noLettersFound);
             return false;
         }

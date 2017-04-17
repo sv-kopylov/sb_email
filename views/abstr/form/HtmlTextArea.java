@@ -9,6 +9,7 @@ public class HtmlTextArea extends HtmlElement {
     String value = "";
     public HtmlTextArea(String name) {
         super("textarea");
+        setAttribute("name",name);
     }
     @Override
     protected boolean hasCloseTag() {

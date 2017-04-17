@@ -47,4 +47,7 @@ public class P_PostBox extends P_MasterTemplate {
         lettersTable.setLetters(list);
 
     }
+    public void clean(){
+        lettersTable.clear();
+    }
 }

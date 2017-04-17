@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.TreeMap;
 
@@ -24,16 +25,24 @@ public class BagCleaner {
     @Scheduled(fixedRate = 60000l)
     public void cleanBag(){
         TIMEOUT_MILLS = Long.parseLong(timeoutString)*60000;
-        logger.info("Bag cleaning is started, timeout " + timeoutString);
-        TreeMap<String, PostBoxManager> allManagers = bag.getAllManagersMap();
+        logger.info("Bag cleaning is started, timeout " + timeoutString+" minutes");
+        ArrayList<String> keys = new ArrayList<>();
         Long nowTime = GregorianCalendar.getInstance().getTimeInMillis();
-        for(String key: allManagers.keySet()){
-            if(nowTime - allManagers.get(key).getTimeStamp()>TIMEOUT_MILLS){
-                logger.info("session of "+bag.getManager(key).getPostBox().getName()+" removed");
-                bag.removeManager(key);
-            }
-        }
 
+        for(String key: bag.getAllManagersMap().keySet()){
+            if(nowTime - bag.getAllManagersMap().get(key).getTimeStamp()>TIMEOUT_MILLS){
+               keys.add(key);
+
+            }
+
+        }
+        if (keys.size()>0) {
+            for (String key: keys) {
+                bag.removeManager(key);
+                logger.info("session of " + key + " removed");
+            }
+            keys.clear();
+        }
     }
 
 }

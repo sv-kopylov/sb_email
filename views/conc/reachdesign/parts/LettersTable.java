@@ -22,10 +22,11 @@ public class LettersTable extends HtmlTable{
     }
 
     public void setLetters(List<LetterBoxBunch> letters){
+        clear();
         if(letters==null||letters.size()==0||sessionId==null){
             return;
         }
-        clear();
+
         tableHead.setRelation(letters.get(0).getRelation());
         this.addRow(tableHead);
         LetterLine letterLine;

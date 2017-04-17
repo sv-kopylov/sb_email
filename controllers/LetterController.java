@@ -1,5 +1,6 @@
 package sb_email.controllers;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -28,13 +29,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.*;
 
-/**
- * Created by Сергей on 06.02.2017.
- */
 @Controller
 @Scope(value = "request")
 @RequestMapping(value = "/letter")
 public class LetterController {
+    private static Logger logger = Logger.getLogger(LetterController.class);
     Letter letter = new Letter();
     @Autowired
     private LetterDao letterDao;
@@ -87,11 +86,11 @@ public class LetterController {
 
         }
         if (letterBody != null) {
-
+            logger.info("letters body is "+letterBody);
             letterPage.setLetterBody(letterBody);
             letter.setBody(letterBody);
         } else {
-            System.out.println("letters body is null");
+            logger.info("letters body is "+letterBody);
         }
         if (receiver == null) {
             return letterPage.setWarning("Please enter receiver").getPage();
@@ -131,30 +130,12 @@ public class LetterController {
 
         PostBox pb = pbmngr.getPostBox();
         Letter letter =letterDao.findOne(Long.parseLong(letterId));
+        LetterBoxBunch letterBoxBunch;
         Relation relation=Relation.RECEIVED;
 
-        List<LetterBoxBunch> bunches = lettersBoxBunchDao.findByPostBox(pb);
-        for (int i=0; i<bunches.size(); i++){
-           if(bunches.get(i).getLetter().equals(letter)){
-               bunches.get(i).setDeleted(true);
-               lettersBoxBunchDao.save(bunches.get(i));
-               relation = bunches.get(i).getRelation();
-               break;
-              }
-
-        }
-
-        bunches = lettersBoxBunchDao.findByLetter(letter);
-        int cnt=0;
-        for(int i=0; i<bunches.size(); i++){
-            if (!bunches.get(i).isDeleted()){
-                cnt++;
-            }
-        }
-        if(cnt==0){
-            lettersBoxBunchDao.delete(bunches);
-            letterDao.delete(letter);
-        }
+        letterBoxBunch = setDeletedForBunch(pb, letter);
+        relation = letterBoxBunch.getRelation();
+        deleteLetterFromDBifNoNeed(letter);
 
         if(relation.equals(Relation.SENT)){
            pbmngr.setSentLetters(lettersBoxBunchDao);
@@ -162,6 +143,32 @@ public class LetterController {
         } else {
             pbmngr.setReceivedLetters(lettersBoxBunchDao);
             return pbmngr.getPostBoxPage().getPage();
+        }
+    }
+
+    private  LetterBoxBunch setDeletedForBunch (PostBox pb, Letter letter){
+        List<LetterBoxBunch> allBunchesOfThatBox = lettersBoxBunchDao.findByPostBox(pb);
+        LetterBoxBunch result = null;
+        for (int i=0; i<allBunchesOfThatBox.size(); i++){
+            if(allBunchesOfThatBox.get(i).getLetter().equals(letter)){
+                allBunchesOfThatBox.get(i).setDeleted(true);
+                result = lettersBoxBunchDao.save(allBunchesOfThatBox.get(i));
+
+            }
+        }
+        return result;
+    }
+    private void deleteLetterFromDBifNoNeed(Letter letter){
+        List<LetterBoxBunch> allBunchesOfThatLetter = lettersBoxBunchDao.findByLetter(letter);
+        int cnt=0;
+        for(int i=0; i<allBunchesOfThatLetter.size(); i++){
+            if (!allBunchesOfThatLetter.get(i).isDeleted()){
+                cnt++;
+            }
+        }
+        if(cnt==0){
+            lettersBoxBunchDao.delete(allBunchesOfThatLetter);
+            letterDao.delete(letter);
         }
     }
 

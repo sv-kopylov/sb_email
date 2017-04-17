@@ -28,7 +28,7 @@ public class Bag {
     }
 
     public PostBoxManager getManager (String sessionId){
-        logger.info("request for manager");
+//        logger.info("request for manager");
         return treeMap.get(sessionId);
     }
 

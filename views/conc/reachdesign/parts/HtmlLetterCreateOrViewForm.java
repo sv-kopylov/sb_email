@@ -19,6 +19,7 @@ public class HtmlLetterCreateOrViewForm extends HtmlElement {
     public HtmlLetterCreateOrViewForm() {
         super("form");
         setAttribute("method", "POST");
+        setAction(ViewSettings.sendLetterAction);
         letterBody.setAttribute("class", "letterBodyArea");
         receiver.setAttribute("class", "inputText");
         subject.setAttribute("class", "inputText");
