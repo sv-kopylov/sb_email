@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sb_email.ViewSettings;
 import sb_email.controllers.manager.Bag;
 import sb_email.controllers.manager.IdGen;
 import sb_email.controllers.manager.PostBoxManager;
 import sb_email.dao.LettersBoxBunchDao;
 import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
-import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 /**
@@ -39,7 +37,7 @@ public class WelcomeController {
     private String userName;
     private PostBox usersBox;
     private P_Welcome welcomePage = new P_Welcome();
-    private PostBoxPage pbp = new PostBoxPage();
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody

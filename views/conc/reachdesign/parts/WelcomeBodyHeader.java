@@ -7,7 +7,6 @@ import sb_email.views.abstr.bodyelemants.HtmlA;
 import sb_email.views.abstr.form.HtmlForm;
 import sb_email.views.abstr.form.HtmlInput;
 import sb_email.views.abstr.form.InputType;
-import sb_email.views.abstr.layouts.Html2ColFormLayout;
 import sb_email.views.abstr.layouts.HtmlTableLayout;
 
 /**

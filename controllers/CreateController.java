@@ -7,17 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sb_email.controllers.manager.Bag;
-import sb_email.controllers.manager.PostBoxManager;
 import sb_email.dao.PostBoxDao;
 import sb_email.persist.PostBox;
-import sb_email.views.conc.CreatingPage;
-import sb_email.views.conc.PostBoxPage;
-import sb_email.views.conc.WelcomePage;
 import sb_email.views.conc.reachdesign.pages.P_CreatingBox;
 import sb_email.views.conc.reachdesign.pages.P_Welcome;
 
 import javax.jws.WebParam;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Сергей on 03.02.2017.

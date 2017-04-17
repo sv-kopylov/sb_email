@@ -1,13 +1,10 @@
 package sb_email.controllers.manager;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import sb_email.ViewSettings;
 import sb_email.dao.LettersBoxBunchDao;
-import sb_email.persist.Letter;
 import sb_email.persist.LetterBoxBunch;
 import sb_email.persist.PostBox;
 import sb_email.persist.Relation;
-import sb_email.views.conc.PostBoxPage;
 import sb_email.views.conc.reachdesign.pages.P_PostBox;
 
 import java.util.ArrayList;
@@ -93,7 +90,7 @@ public class PostBoxManager {
             if (bunches.get(i).getRelation().equals(Relation.RECEIVED)) {
                 if(!bunches.get(i).isDeleted()) {
                     receivedLetBunches.add(bunches.get(i));
-                   
+
                 }
             }
         }
